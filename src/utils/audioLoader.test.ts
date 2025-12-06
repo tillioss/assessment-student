@@ -1,11 +1,13 @@
 // Mock the audioLoader module directly
 jest.mock('./audioLoader', () => {
-  const mockAudioAr = { 'question_1': '/ar/question_1.mp3' }
-  const mockAudioEn = { 'question_1': '/en/question_1.mp3' }
+  const mockAudioAr = { question_1: '/ar/question_1.mp3' }
+  const mockAudioEn = { question_1: '/en/question_1.mp3' }
   return {
     audioAr: mockAudioAr,
     audioEn: mockAudioEn,
-    getAudio: jest.fn((lang: string) => (lang === 'ar' ? mockAudioAr : mockAudioEn)),
+    getAudio: jest.fn((lang: string) =>
+      lang === 'ar' ? mockAudioAr : mockAudioEn,
+    ),
   }
 })
 
@@ -29,4 +31,3 @@ describe('audioLoader', () => {
     })
   })
 })
-

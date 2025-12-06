@@ -103,7 +103,9 @@ describe('appwrite service', () => {
       })
 
       const createCall = createSpy.mock.calls[0]
-      const overallDist = JSON.parse((createCall[3] as any).overall_level_distribution)
+      const overallDist = JSON.parse(
+        (createCall[3] as any).overall_level_distribution,
+      )
       expect(overallDist.beginner).toBe(1)
       expect(overallDist.learner).toBe(0)
       expect(overallDist.expert).toBe(0)
@@ -129,7 +131,9 @@ describe('appwrite service', () => {
       })
 
       const createCall = createSpy.mock.calls[0]
-      const overallDist = JSON.parse((createCall[3] as any).overall_level_distribution)
+      const overallDist = JSON.parse(
+        (createCall[3] as any).overall_level_distribution,
+      )
       expect(overallDist.beginner).toBe(0)
       expect(overallDist.learner).toBe(1)
       expect(overallDist.expert).toBe(0)
@@ -155,7 +159,9 @@ describe('appwrite service', () => {
       })
 
       const createCall = createSpy.mock.calls[0]
-      const overallDist = JSON.parse((createCall[3] as any).overall_level_distribution)
+      const overallDist = JSON.parse(
+        (createCall[3] as any).overall_level_distribution,
+      )
       expect(overallDist.beginner).toBe(0)
       expect(overallDist.learner).toBe(0)
       expect(overallDist.expert).toBe(1)
@@ -203,7 +209,9 @@ describe('appwrite service', () => {
       )
 
       const updateCall = updateSpy.mock.calls[0]
-      const newOverall = JSON.parse((updateCall[3] as any).overall_level_distribution)
+      const newOverall = JSON.parse(
+        (updateCall[3] as any).overall_level_distribution,
+      )
       expect(newOverall.expert).toBe(2) // incremented from 1
 
       const newCategoryDist = JSON.parse(

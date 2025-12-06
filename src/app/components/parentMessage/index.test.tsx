@@ -70,4 +70,3 @@ describe('ParentMessage component', () => {
     expect(clearTimeoutSpy).toHaveBeenCalled()
   })
 })
-

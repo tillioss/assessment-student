@@ -102,7 +102,8 @@ describe('LanguageDropdown component', () => {
     await user.click(button)
     const arabicOption = screen.getByText('العربية')
     await user.click(arabicOption)
-    expect(mockReplace).toHaveBeenCalledWith('/assessment?existing=param&lang=ar')
+    expect(mockReplace).toHaveBeenCalledWith(
+      '/assessment?existing=param&lang=ar',
+    )
   })
 })
-

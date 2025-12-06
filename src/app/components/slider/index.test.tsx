@@ -34,9 +34,7 @@ describe('Slider component', () => {
   it('starts at index 0', () => {
     render(<Slider {...defaultProps} />)
     const buttons = screen.getAllByRole('button')
-    const firstButton = buttons.find((btn) =>
-      btn.querySelector('.bg-red-500'),
-    )
+    const firstButton = buttons.find((btn) => btn.querySelector('.bg-red-500'))
     expect(firstButton).toBeDefined()
   })
 
@@ -64,20 +62,15 @@ describe('Slider component', () => {
     const option2 = screen.getByText('Option 2')
     await user.click(option2)
     const buttons = screen.getAllByRole('button')
-    const activeButton = buttons.find((btn) =>
-      btn.querySelector('.bg-red-500'),
-    )
+    const activeButton = buttons.find((btn) => btn.querySelector('.bg-red-500'))
     expect(activeButton).toBeDefined()
   })
 
   it('calculates percentage correctly', () => {
     render(<Slider {...defaultProps} />)
-    const sliderTrack = screen
-      .getByText('Option 1')
-      .closest('.flex')
+    const sliderTrack = screen.getByText('Option 1').closest('.flex')
       ?.previousElementSibling
     const fill = sliderTrack?.querySelector('.bg-yellow-200')
     expect(fill).toHaveStyle({ width: '0%' })
   })
 })
-

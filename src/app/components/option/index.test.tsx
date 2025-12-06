@@ -84,4 +84,3 @@ describe('Option component', () => {
     expect(global.Audio).not.toHaveBeenCalled()
   })
 })
-

@@ -65,8 +65,20 @@ const mockQuestions = [
     questionAudio: '/audio/q1.mp3',
     image: '1.png',
     answerOptions: [
-      { label: 'Option 1', value: '1', score: 1, image: 'opt1.png', audio: '/audio/opt1.mp3' },
-      { label: 'Option 2', value: '2', score: 2, image: 'opt2.png', audio: '/audio/opt2.mp3' },
+      {
+        label: 'Option 1',
+        value: '1',
+        score: 1,
+        image: 'opt1.png',
+        audio: '/audio/opt1.mp3',
+      },
+      {
+        label: 'Option 2',
+        value: '2',
+        score: 2,
+        image: 'opt2.png',
+        audio: '/audio/opt2.mp3',
+      },
     ],
   },
   {
@@ -91,8 +103,20 @@ const mockQuestions = [
     questionId: 'question_21',
     questionAudio: '/audio/q21.mp3',
     answerOptions: [
-      { label: 'Play Tablet', value: 'playTablet', score: 1, image: 'tablet.png', audio: '/audio/tablet.mp3' },
-      { label: 'Read', value: 'read', score: 6, image: 'read.png', audio: '/audio/read.mp3' },
+      {
+        label: 'Play Tablet',
+        value: 'playTablet',
+        score: 1,
+        image: 'tablet.png',
+        audio: '/audio/tablet.mp3',
+      },
+      {
+        label: 'Read',
+        value: 'read',
+        score: 6,
+        image: 'read.png',
+        audio: '/audio/read.mp3',
+      },
     ],
   },
 ]
@@ -142,13 +166,13 @@ describe('ChildAssessment component', () => {
     const user = userEvent.setup()
     render(<Assessment />)
     expect(screen.getByText('Question 1')).toBeInTheDocument()
-    
+
     const option1 = screen.getByText('Option 1').closest('div')
     await user.click(option1!)
-    
+
     const nextButton = screen.getByText('common.next')
     await user.click(nextButton)
-    
+
     await waitFor(() => {
       expect(screen.getByText('Question 2')).toBeInTheDocument()
     })
@@ -157,39 +181,45 @@ describe('ChildAssessment component', () => {
   it('disables next button for slider question until option is selected', async () => {
     const user = userEvent.setup()
     render(<Assessment />)
-    
+
     // Move to slider question
     const option1 = screen.getByText('Option 1').closest('div')
     if (option1) {
       await user.click(option1)
       const nextButton1 = screen.getByText('common.next')
       await user.click(nextButton1)
-      
-      await waitFor(() => {
-        const nextButton2 = screen.queryByText('common.next')
-        if (nextButton2) {
-          // Button might be enabled if slider has default selection
-          expect(nextButton2).toBeInTheDocument()
-        }
-      }, { timeout: 2000 })
+
+      await waitFor(
+        () => {
+          const nextButton2 = screen.queryByText('common.next')
+          if (nextButton2) {
+            // Button might be enabled if slider has default selection
+            expect(nextButton2).toBeInTheDocument()
+          }
+        },
+        { timeout: 2000 },
+      )
     }
   })
 
   it('handles story type questions', async () => {
     const user = userEvent.setup()
     render(<Assessment />)
-    
+
     // Move through questions to reach story
     const option1 = screen.getByText('Option 1').closest('div')
     if (option1) {
       await user.click(option1)
       const nextButton = screen.getByText('common.next')
       await user.click(nextButton)
-      
-      await waitFor(() => {
-        // Should have moved to next question
-        expect(screen.queryByText('Question 1')).not.toBeInTheDocument()
-      }, { timeout: 2000 })
+
+      await waitFor(
+        () => {
+          // Should have moved to next question
+          expect(screen.queryByText('Question 1')).not.toBeInTheDocument()
+        },
+        { timeout: 2000 },
+      )
     }
   })
 
@@ -213,13 +243,16 @@ describe('ChildAssessment component', () => {
   })
 
   it('uses studentInfo from localStorage when available', () => {
-    localStorage.setItem('studentInfo', JSON.stringify({
-      school: 'Local School',
-      grade: 'Local Grade',
-      section: 'Local Section',
-      zone: 'Local Zone',
-    }))
-    
+    localStorage.setItem(
+      'studentInfo',
+      JSON.stringify({
+        school: 'Local School',
+        grade: 'Local Grade',
+        section: 'Local Section',
+        zone: 'Local Zone',
+      }),
+    )
+
     render(<Assessment />)
     // Component should load studentInfo from localStorage
     expect(screen.getByText('Question 1')).toBeInTheDocument()
@@ -232,7 +265,7 @@ describe('ChildAssessment component', () => {
         return null
       }),
     })
-    
+
     render(<Assessment />)
     // Language should be changed via useEffect
   })
@@ -242,13 +275,13 @@ describe('ChildAssessment component', () => {
     global.Audio = jest.fn().mockImplementation(() => ({
       play: mockPlay,
     }))
-    
+
     const user = userEvent.setup()
     render(<Assessment />)
-    
+
     const audioButton = screen.getByLabelText('Play question audio')
     await user.click(audioButton)
-    
+
     expect(global.Audio).toHaveBeenCalledWith('/audio/q1.mp3')
     expect(mockPlay).toHaveBeenCalled()
   })
@@ -259,4 +292,3 @@ describe('ChildAssessment component', () => {
     // Since we start at 0, we need to check
   })
 })
-

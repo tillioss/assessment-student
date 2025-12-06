@@ -78,9 +78,7 @@ describe('PreloadImage component', () => {
 
   it('does not create image when src is empty', () => {
     const createImageSpy = jest.spyOn(global, 'Image')
-    render(
-      <PreloadImage src="" alt="Test image" className="test-class" />,
-    )
+    render(<PreloadImage src="" alt="Test image" className="test-class" />)
     // Image constructor should not be called with empty src
     expect(createImageSpy).not.toHaveBeenCalled()
   })
@@ -106,4 +104,3 @@ describe('PreloadImage component', () => {
     expect(img).toHaveClass('opacity-0')
   })
 })
-

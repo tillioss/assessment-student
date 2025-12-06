@@ -53,4 +53,3 @@ describe('Progress component', () => {
     expect(indicator).toHaveStyle({ left: 'auto', right: '50%' })
   })
 })
-
